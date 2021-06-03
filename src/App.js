@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import Home from "./components/Home";
 import Searchbar from "./components/Searchbar";
 import StockPage from "./components/StockPage";
@@ -23,6 +23,10 @@ class App extends Component {
       <div className="App_main">
         <main>
           <Searchbar />
+          <header>
+            <h1><Link to="/">Locksley</Link></h1>
+          </header>
+          {this.renderMainRoutes()}
         </main>
       </div>
     );
