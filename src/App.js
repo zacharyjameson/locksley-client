@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Route } from "react-router-dom";
+import Home from "./components/Home";
+import Searchbar from "./components/Searchbar";
+import StockPage from "./components/StockPage";
+import Watchlist from "./components/Watchlist";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {};
+
+  renderMainRoutes() {
+    return (
+      <>
+        <Route exact path="/" component={Home} />
+        <Route path="/watchlist" component={Watchlist} />
+        <Route path="/info" component={StockPage} />
+      </>
+    );
+  }
+
+  render() {
+    return (
+      <div className="App_main">
+        <main>
+          <Searchbar />
+        </main>
+      </div>
+    );
+  }
 }
 
 export default App;
