@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Link } from "react-router-dom";
+import ApiContext from "./components/ApiContext";
 import Home from "./components/Home";
 import Searchbar from "./components/Searchbar";
 import StockPage from "./components/StockPage";
@@ -33,7 +34,8 @@ class App extends Component {
       })
       .then(([savedStocks, spy]) => {
         this.setState({ savedStocks, spy });
-        console.log(savedStocks, spy);
+        console.log(this.state.savedStocks)
+        console.log(this.state.spy);
       })
       .catch((error) => {
         console.error({ error });
@@ -51,7 +53,12 @@ class App extends Component {
   }
 
   render() {
+    const value = {
+      dbStocks: this.state.savedStocks,
+    }
+
     return (
+      <ApiContext.Provider value={value}>
       <div className="App_main">
         <main>
           <Searchbar />
@@ -63,6 +70,7 @@ class App extends Component {
           {this.renderMainRoutes()}
         </main>
       </div>
+      </ApiContext.Provider>
     );
   }
 }
