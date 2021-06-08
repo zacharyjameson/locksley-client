@@ -13,6 +13,7 @@ class App extends Component {
     spy: [],
     savedStocks: [],
     meta: [],
+    values: [],
   };
 
   componentDidMount() {
@@ -38,10 +39,10 @@ class App extends Component {
           savedStocks: savedStocks,
           spy: spy,
           meta: spy.meta,
+          values: spy.values
         });
-        console.log(this.state.savedStocks);
-        console.log(this.state.spy);
-        console.log(spy.meta);
+        console.log(this.state.meta.symbol)
+        console.log(this.state.values);
       })
       .catch((error) => {
         console.error({ error });
