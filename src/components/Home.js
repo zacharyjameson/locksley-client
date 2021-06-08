@@ -1,10 +1,17 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Chart } from "react-google-charts";
+import ApiContext from "./ApiContext";
 
 class Home extends Component {
   state = {};
+
+  static contextType = ApiContext;
+
   render() {
+
+    const { meta = [] } = this.context;
+    console.log(meta.symbol);
     return (
       <div className="Home">
         <section>
@@ -18,34 +25,35 @@ class Home extends Component {
               <li>
                 <Link to="/info">
                   <Chart
-                    width={500}
-                    height={350}
-                    chartType="CandlestickChart"
+                    width={"600px"}
+                    height={"400px"}
+                    chartType="LineChart"
                     loader={<div>Loading Chart</div>}
                     data={[
-                      ["Day:", "", "open", "close", "high"],
-                      ["2021-06-02", 124.85, 124.895, 124.94, 125.0],
-                      ["2021-06-02", 124.74, 124.96, 124.895, 124.99],
-                      ["Wed", 124.6487, 124.885, 124.965, 125.0598],
-                      ["Thu", 124.85, 124.895, 124.94, 125.0],
-                      ["Fri", 124.85, 124.895, 124.94, 125.0],
-                      ["Sat", 124.85, 124.895, 124.94, 125.0],
+                      ["date", "Close Price"],
+                      [0, 0],
+                      [1, 10],
+                      [2, 23],
+                      [3, 17],
+                      [4, 18],
+                      [5, 9],
+                      [6, 11],
+                      [7, 27],
+                      [8, 33],
+                      [9, 40],
+                      [10, 32],
+                      [11, 35],
                     ]}
                     options={{
-                      legend: "none",
-                      bar: { groupWidth: "50%" }, // Remove space between bars.
-                      candlestick: {
-                        fallingColor: { strokeWidth: 0, fill: "#FF1800" }, // red
-                        risingColor: { strokeWidth: 0, fill: "#1DB954" }, // green
-                      },
-                      title: "S&P500",
+                      title: `${meta.symbol}`,
                       hAxis: {
-                        minValue: 0,
+                        title: "Date",
                       },
                       vAxis: {
-                        format: "currency",
+                        title: "Close Price",
                       },
                     }}
+                    rootProps={{ "data-testid": "3" }}
                   />
                 </Link>
               </li>

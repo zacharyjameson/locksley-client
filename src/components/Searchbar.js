@@ -17,6 +17,8 @@ class Searchbar extends Component {
         <nav role="navigation">
           <input type="text" placeholder="Search" />
           <button>Submit</button> | <Link to="/watchlist">Watchlist ({uniqueSymbols.length})</Link>
+          <br />
+          <p>Search Limit: 8 per minute</p>
         </nav>
       </div>
     );

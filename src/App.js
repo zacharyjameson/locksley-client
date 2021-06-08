@@ -12,6 +12,7 @@ class App extends Component {
     query: "",
     spy: [],
     savedStocks: [],
+    meta: [],
   };
 
   componentDidMount() {
@@ -33,9 +34,14 @@ class App extends Component {
         return Promise.all([savedStocksRes.json(), spyRes.json()]);
       })
       .then(([savedStocks, spy]) => {
-        this.setState({ savedStocks, spy });
-        console.log(this.state.savedStocks)
+        this.setState({
+          savedStocks: savedStocks,
+          spy: spy,
+          meta: spy.meta,
+        });
+        console.log(this.state.savedStocks);
         console.log(this.state.spy);
+        console.log(spy.meta);
       })
       .catch((error) => {
         console.error({ error });
@@ -54,22 +60,24 @@ class App extends Component {
 
   render() {
     const value = {
-      dbStocks: this.state.savedStocks,
-    }
+      savedStocks: this.state.savedStocks,
+      spy: this.state.spy,
+      meta: this.state.meta,
+    };
 
     return (
       <ApiContext.Provider value={value}>
-      <div className="App_main">
-        <main>
-          <Searchbar />
-          <header>
-            <h1>
-              <Link to="/">Locksley</Link>
-            </h1>
-          </header>
-          {this.renderMainRoutes()}
-        </main>
-      </div>
+        <div className="App_main">
+          <main>
+            <Searchbar />
+            <header>
+              <h1>
+                <Link to="/">Locksley</Link>
+              </h1>
+            </header>
+            {this.renderMainRoutes()}
+          </main>
+        </div>
       </ApiContext.Provider>
     );
   }
