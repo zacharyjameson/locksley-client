@@ -13,9 +13,6 @@ class Home extends Component {
     const { meta = [] } = this.context;
     const { spy_data = [] } = this.context;
     const lastPrice = this.context.lastPrice;
-    console.log(meta.symbol);
-    console.log(meta);
-    console.log(lastPrice);
 
     const createData = (info) => {
       info.map((stock) => {
