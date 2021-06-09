@@ -6,6 +6,7 @@ import Searchbar from "./components/Searchbar";
 import StockPage from "./components/StockPage";
 import Watchlist from "./components/Watchlist";
 import config from "./config";
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -15,6 +16,7 @@ class App extends Component {
     meta: [],
     spy_data: [],
     lastPrice: [],
+    oldPrice: []
   };
 
   componentDidMount() {
@@ -25,7 +27,7 @@ class App extends Component {
     Promise.all([
       fetch(`${config.API_ENDPOINT}`),
       fetch(
-        "https://api.twelvedata.com/time_series?symbol=SPY&interval=1day&apikey=1d3ecd525942497a8c4fc10ab430d84e&outputsize=7"
+        "https://api.twelvedata.com/time_series?symbol=SFTBY&interval=1day&apikey=1d3ecd525942497a8c4fc10ab430d84e&outputsize=14"
       ),
     ])
       .then(([savedStocksRes, spyRes]) => {
@@ -42,8 +44,10 @@ class App extends Component {
           meta: spy.meta,
           spy_data: spy.values,
           lastPrice: spy.values[0].close,
+          oldPrice: spy.values[13].close,
         });
         console.log(this.state.lastPrice);
+        console.log(this.state.spy_data);
       })
       .catch((error) => {
         console.error({ error });
@@ -66,7 +70,8 @@ class App extends Component {
       spy: this.state.spy,
       meta: this.state.meta,
       spy_data: this.state.spy_data,
-      lastPrice: this.state.lastPrice
+      lastPrice: this.state.lastPrice,
+      oldPrice: this.state.oldPrice
     };
 
     return (

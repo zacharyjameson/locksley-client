@@ -13,6 +13,11 @@ class Home extends Component {
     const { meta = [] } = this.context;
     const { spy_data = [] } = this.context;
     const lastPrice = this.context.lastPrice;
+    const oldPrice = this.context.oldPrice;
+    console.log(oldPrice);
+
+    const lineColor = lastPrice > oldPrice ? '#1DB954' : '#FF0000';
+    console.log(lineColor);
 
     const createData = (info) => {
       info.map((stock) => {
@@ -40,13 +45,14 @@ class Home extends Component {
                     loader={<div>Loading Chart</div>}
                     data={createData(spy_data)}
                     options={{
-                      title: `${meta.symbol} | Last Price: ${lastPrice}`,
+                      title: `${meta.symbol} | Last Close Price: ${lastPrice}`,
                       hAxis: {
                         title: "Date",
                       },
                       vAxis: {
                         title: "Close Price",
                       },
+                      colors: [`${lineColor}`]
                     }}
                     rootProps={{ "data-testid": "3" }}
                   />
