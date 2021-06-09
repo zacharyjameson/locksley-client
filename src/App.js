@@ -27,7 +27,7 @@ class App extends Component {
     Promise.all([
       fetch(`${config.API_ENDPOINT}`),
       fetch(
-        "https://api.twelvedata.com/time_series?symbol=SFTBY&interval=1day&apikey=1d3ecd525942497a8c4fc10ab430d84e&outputsize=14"
+        "https://api.twelvedata.com/time_series?symbol=SPY&interval=1day&apikey=1d3ecd525942497a8c4fc10ab430d84e&outputsize=14"
       ),
     ])
       .then(([savedStocksRes, spyRes]) => {
