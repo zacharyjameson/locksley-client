@@ -9,9 +9,21 @@ class Home extends Component {
   static contextType = ApiContext;
 
   render() {
-
+    const data = [["Data", "Close Price"]];
     const { meta = [] } = this.context;
+    const { spy_data = [] } = this.context;
+    const lastPrice = this.context.lastPrice;
     console.log(meta.symbol);
+    console.log(meta);
+    console.log(lastPrice);
+
+    const createData = (info) => {
+      info.map((stock) => {
+        data.splice(1, 0, [new Date(stock.datetime), parseFloat(stock.close)]);
+      })
+      return data;
+    }
+
     return (
       <div className="Home">
         <section>
@@ -25,27 +37,13 @@ class Home extends Component {
               <li>
                 <Link to="/info">
                   <Chart
-                    width={"600px"}
+                    width={"100%"}
                     height={"400px"}
                     chartType="LineChart"
                     loader={<div>Loading Chart</div>}
-                    data={[
-                      ["date", "Close Price"],
-                      [0, 0],
-                      [1, 10],
-                      [2, 23],
-                      [3, 17],
-                      [4, 18],
-                      [5, 9],
-                      [6, 11],
-                      [7, 27],
-                      [8, 33],
-                      [9, 40],
-                      [10, 32],
-                      [11, 35],
-                    ]}
+                    data={createData(spy_data)}
                     options={{
-                      title: `${meta.symbol}`,
+                      title: `${meta.symbol} | Last Price: ${lastPrice}`,
                       hAxis: {
                         title: "Date",
                       },

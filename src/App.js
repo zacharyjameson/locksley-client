@@ -13,7 +13,8 @@ class App extends Component {
     spy: [],
     savedStocks: [],
     meta: [],
-    values: [],
+    spy_data: [],
+    lastPrice: [],
   };
 
   componentDidMount() {
@@ -39,10 +40,10 @@ class App extends Component {
           savedStocks: savedStocks,
           spy: spy,
           meta: spy.meta,
-          values: spy.values
+          spy_data: spy.values,
+          lastPrice: spy.values[0].close,
         });
-        console.log(this.state.meta.symbol)
-        console.log(this.state.values);
+        console.log(this.state.lastPrice);
       })
       .catch((error) => {
         console.error({ error });
@@ -64,6 +65,8 @@ class App extends Component {
       savedStocks: this.state.savedStocks,
       spy: this.state.spy,
       meta: this.state.meta,
+      spy_data: this.state.spy_data,
+      lastPrice: this.state.lastPrice
     };
 
     return (
