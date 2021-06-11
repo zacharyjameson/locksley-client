@@ -9,20 +9,12 @@ class Home extends Component {
   static contextType = ApiContext;
 
   render() {
-    const data = [["Data", "Close Price"]];
-    const { meta = [] } = this.context;
-    const { spy_data = [] } = this.context;
-    const lastPrice = this.context.lastPrice;
-    const oldPrice = this.context.oldPrice;
-
-    const lineColor = lastPrice > oldPrice ? '#1DB954' : '#FF0000';
-
-    const createData = (info) => {
-      info.map((stock) => {
-        data.splice(1, 0, [new Date(stock.datetime), parseFloat(stock.close)]);
-      })
-      return data;
-    }
+    const close = this.context.currentPriceClose;
+    const spy = this.context.spy;
+    const dji = this.context.dji;
+    const schfiftyfiveSPY = this.context.schfiftyfiveSPY;
+    const schfiftyfiveDJI = this.context.schfiftyfiveDJI;
+    const stock = this.context;
 
     return (
       <div className="Home">
@@ -35,26 +27,16 @@ class Home extends Component {
           <div>
             <ul>
               <li>
-                <Link to="/stock/SPY">
-                  <Chart
-                    width={"100%"}
-                    height={"400px"}
-                    chartType="LineChart"
-                    loader={<div>Loading Chart</div>}
-                    data={createData(spy_data)}
-                    options={{
-                      title: `${meta.symbol} | Last Close Price: ${lastPrice}`,
-                      hAxis: {
-                        title: "Date",
-                      },
-                      vAxis: {
-                        title: "Close Price",
-                      },
-                      colors: [`${lineColor}`]
-                    }}
-                    rootProps={{ "data-testid": "3" }}
-                  />
-                </Link>
+                <h2>{spy.symbol} | {spy.name} | ${parseFloat(spy.close).toFixed(3)} ({stock.handlePosNeg(spy.percent_change)})</h2>
+                <div>Volume: {spy.volume}</div>
+                <div>Previous Close: ${parseFloat(stock.spy.previous_close).toFixed(3)} </div>
+                <div>52-Week: Low: {parseFloat(schfiftyfiveSPY.low).toFixed(3)} High: {parseFloat(schfiftyfiveSPY.high).toFixed(3)} </div>
+              </li>
+              <li>
+                <h2>{dji.symbol} | {dji.name} | ${parseFloat(dji.close).toFixed(3)} ({stock.handlePosNeg(dji.percent_change)})</h2>
+                <div>Volume: {dji.volume}</div>
+                <div>Previous Close: ${parseFloat(dji.previous_close).toFixed(3)} </div>
+                <div>52-Week: Low: {parseFloat(schfiftyfiveDJI.low).toFixed(3)} High: {parseFloat(schfiftyfiveDJI.high).toFixed(3)} </div>
               </li>
             </ul>
           </div>

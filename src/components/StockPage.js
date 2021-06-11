@@ -9,48 +9,23 @@ class StockPage extends Component {
 
   render() {
 
+    const qStock = this.context.query_values;
+    const schfiftyfive = this.context.query_52week;
     const stock = this.context;
+    console.log(stock);
+
     return (
       <div className="StockPage">
         <section>
-          <header>Individual Stock Page</header>
           <div>
-            <p>
-              <a href="#">Click to Refresh Data</a>
-            </p>
             <ul>
               <li>
-                <Chart
-                  width={500}
-                  height={350}
-                  chartType="CandlestickChart"
-                  loader={<div>Loading Chart</div>}
-                  data={[
-                    ["Day:", "", "open", "close", "high"],
-                    ["2021-06-02", 124.85, 124.895, 124.94, 125.00],
-                    ["2021-06-02", 124.74, 124.96, 124.895, 124.99],
-                    ["Wed", 124.64870, 124.88500, 124.96500, 125.05980],
-                    ["Thu", 124.85, 124.895, 124.94, 125.00],
-                    ["Fri", 124.85, 124.895, 124.94, 125.00],
-                    ["Sat", 124.85, 124.895, 124.94, 125.00]
-                  ]}
-                  options={{
-                    legend: "none",
-                    bar: { groupWidth: "50%" }, // Remove space between bars.
-                    candlestick: {
-                      fallingColor: { strokeWidth: 0, fill: "#FF1800" }, // red
-                      risingColor: { strokeWidth: 0, fill: "#1DB954" }, // green
-                    },
-                    title: `${stock.query}`,
-                    hAxis: {
-                      minValue: 0,
-                    },
-                    vAxis: {
-                      format: "currency"
-                    },
-                  }}
-                />
+                <h2>{qStock.symbol} | {qStock.name} | ${parseFloat(qStock.close).toFixed(3)} ({stock.handlePosNeg(qStock.percent_change)})</h2>
+                <div>Volume: {qStock.volume}</div>
+                <div>Previous Close: ${parseFloat(qStock.previous_close).toFixed(3)} </div>
+                <div>52-Week: Low: {parseFloat(schfiftyfive.low).toFixed(3)} High: {parseFloat(schfiftyfive.high).toFixed(3)} </div>
                 <button type="submit">Add to Watchlist</button>
+                <div><a href="#">Click to Refresh Data</a></div>
               </li>
             </ul>
           </div>

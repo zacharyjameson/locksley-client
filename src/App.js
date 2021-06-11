@@ -7,20 +7,20 @@ import StockPage from "./components/StockPage";
 import Watchlist from "./components/Watchlist";
 import config from "./config";
 import "./App.css";
-import { useHistory } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class App extends Component {
   state = {
     query: "",
+    query_52week: [],
     query_values: [],
     spy: [],
+    dji: [],
     savedStocks: [],
-    meta: [],
-    spy_data: [],
-    lastPrice: [],
-    oldPrice: [],
+    schfiftyfiveSPY: [],
+    schfiftyfiveDJI: [],
   };
-  
+
   componentDidMount() {
     this.fetchAllData();
   }
@@ -28,7 +28,7 @@ class App extends Component {
   fetchAllData = () => {
     Promise.all([
       fetch(`${config.API_ENDPOINT}`),
-      fetch(`${config.STOCK_API_URL}&symbol=SPY`),
+      fetch(`${config.STOCK_API_URL}&symbol=SPY,DJI`),
     ])
       .then(([savedStocksRes, spyRes]) => {
         if (!savedStocksRes.ok)
@@ -40,19 +40,42 @@ class App extends Component {
       .then(([savedStocks, spy]) => {
         this.setState({
           savedStocks: savedStocks,
-          spy: spy,
-          meta: spy.meta,
-          spy_data: spy.values,
-          lastPrice: spy.values[0].close,
-          oldPrice: spy.values[13].close,
+          spy: spy.SPY,
+          dji: spy.DJI,
+          schfiftyfiveSPY: spy.SPY.fifty_two_week,
+          schfiftyfiveDJI: spy.DJI.fifty_two_week
         });
-        console.log(this.state.lastPrice);
-        console.log(this.state.spy_data);
+        console.log(spy.close);
+        console.log(spy);
       })
       .catch((error) => {
         console.error({ error });
       });
   };
+
+  // CALCULATE PERCENTAGE INCREASE OR DECREASE
+  handleIncDec(origPrice, curPrice) {
+    let number;
+    let direction;
+    if (curPrice >= origPrice) {
+      number = ((curPrice - origPrice) / origPrice) * 100;
+      direction = "+";
+    } else {
+      number = ((origPrice - curPrice) / origPrice) * 100;
+      direction = "-";
+    }
+    return `${direction}${number.toFixed(2)}%`;
+  }
+
+  handlePosNeg(price) {
+    let change;
+    if (price >= 0) {
+      change = "+";
+    } else {
+      change = "";
+    }
+    return `${change}${price}%`;
+  }
 
   handleStockQuery = (e) => {
     this.setState({
@@ -74,12 +97,11 @@ class App extends Component {
       })
       .then((stockJson) => {
         this.setState({
-          query_values: stockJson.values,
-        })
-
-        console.log("test");
+          query_values: stockJson,
+          query_52week: stockJson.fifty_two_week,
+        });
+        this.props.history.push(`/stock/${query}`);
         console.log(this.state.query_values);
-        console.log(stockJson.values);
       });
   };
 
@@ -97,13 +119,16 @@ class App extends Component {
     const value = {
       savedStocks: this.state.savedStocks,
       spy: this.state.spy,
-      meta: this.state.meta,
-      spy_data: this.state.spy_data,
-      lastPrice: this.state.lastPrice,
-      oldPrice: this.state.oldPrice,
+      dji: this.state.dji,
+      schfiftyfiveSPY: this.state.schfiftyfiveSPY,
+      schfiftyfiveDJI: this.state.schfiftyfiveDJI,
       handleStockQuery: this.handleStockQuery,
       handleSubmit: this.handleSubmit,
-      query: this.state.query
+      handleIncDec: this.handleIncDec,
+      handlePosNeg: this.handlePosNeg,
+      query: this.state.query,
+      query_values: this.state.query_values,
+      query_52week: this.state.query_52week,
     };
 
     return (
@@ -124,4 +149,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

@@ -25,7 +25,7 @@ class Searchbar extends Component {
               onChange={handleStockQuery.handleStockQuery}
               required
             />
-            <Link to={`/stock/${stocks.query}`}><input type="submit" value="submit" /></Link> |{" "}
+            <input type="submit" value="submit" /> |{" "}
             <Link to="/watchlist">Watchlist ({uniqueSymbols.length})</Link>
           </form>
           <p>Search Limit: 8 per minute</p>
