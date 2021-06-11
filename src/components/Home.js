@@ -35,7 +35,7 @@ class Home extends Component {
           <div>
             <ul>
               <li>
-                <Link to="/info">
+                <Link to="/stock/SPY">
                   <Chart
                     width={"100%"}
                     height={"400px"}

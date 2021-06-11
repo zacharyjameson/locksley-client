@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import { Chart } from "react-google-charts";
+import ApiContext from "./ApiContext";
 
 class StockPage extends Component {
   state = {};
+
+  static contextType = ApiContext;
+
   render() {
+
+    const stock = this.context;
     return (
       <div className="StockPage">
         <section>
@@ -35,7 +41,7 @@ class StockPage extends Component {
                       fallingColor: { strokeWidth: 0, fill: "#FF1800" }, // red
                       risingColor: { strokeWidth: 0, fill: "#1DB954" }, // green
                     },
-                    title: "S&P500",
+                    title: `${stock.query}`,
                     hAxis: {
                       minValue: 0,
                     },

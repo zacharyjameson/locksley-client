@@ -20,7 +20,7 @@ class App extends Component {
     lastPrice: [],
     oldPrice: [],
   };
-
+  
   componentDidMount() {
     this.fetchAllData();
   }
@@ -60,8 +60,8 @@ class App extends Component {
     });
   };
 
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
     const query = this.state.query;
     const url = `${config.STOCK_API_URL}&symbol=${query}`;
 
@@ -76,9 +76,6 @@ class App extends Component {
         this.setState({
           query_values: stockJson.values,
         })
-      .then(() => {
-        this.history.goBack();
-      })
 
         console.log("test");
         console.log(this.state.query_values);
@@ -90,8 +87,8 @@ class App extends Component {
     return (
       <>
         <Route exact path="/" component={Home} />
+        <Route path="/stock/:symbol" component={StockPage} />
         <Route path="/watchlist" component={Watchlist} />
-        <Route path="/:stock_symbol" component={StockPage} />
       </>
     );
   }
@@ -106,6 +103,7 @@ class App extends Component {
       oldPrice: this.state.oldPrice,
       handleStockQuery: this.handleStockQuery,
       handleSubmit: this.handleSubmit,
+      query: this.state.query
     };
 
     return (

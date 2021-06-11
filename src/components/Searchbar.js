@@ -7,6 +7,7 @@ class Searchbar extends Component {
   state = {};
 
   static contextType = ApiContext;
+  
   render() {
     const savedStocks = this.context;
     const handleStockQuery = this.context;
@@ -24,7 +25,7 @@ class Searchbar extends Component {
               onChange={handleStockQuery.handleStockQuery}
               required
             />
-            <input type="submit" value="submit"></input> |{" "}
+            <Link to={`/stock/${stocks.query}`}><input type="submit" value="submit" /></Link> |{" "}
             <Link to="/watchlist">Watchlist ({uniqueSymbols.length})</Link>
           </form>
           <p>Search Limit: 8 per minute</p>
