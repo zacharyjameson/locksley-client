@@ -7,16 +7,18 @@ import StockPage from "./components/StockPage";
 import Watchlist from "./components/Watchlist";
 import config from "./config";
 import "./App.css";
+import { useHistory } from "react-router-dom";
 
 class App extends Component {
   state = {
     query: "",
+    query_values: [],
     spy: [],
     savedStocks: [],
     meta: [],
     spy_data: [],
     lastPrice: [],
-    oldPrice: []
+    oldPrice: [],
   };
 
   componentDidMount() {
@@ -26,9 +28,7 @@ class App extends Component {
   fetchAllData = () => {
     Promise.all([
       fetch(`${config.API_ENDPOINT}`),
-      fetch(
-        "https://api.twelvedata.com/time_series?symbol=SPY&interval=1day&apikey=1d3ecd525942497a8c4fc10ab430d84e&outputsize=14"
-      ),
+      fetch(`${config.STOCK_API_URL}&symbol=SPY`),
     ])
       .then(([savedStocksRes, spyRes]) => {
         if (!savedStocksRes.ok)
@@ -54,12 +54,44 @@ class App extends Component {
       });
   };
 
+  handleStockQuery = (e) => {
+    this.setState({
+      query: e.target.value,
+    });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const query = this.state.query;
+    const url = `${config.STOCK_API_URL}&symbol=${query}`;
+
+    fetch(url)
+      .then((stock) => {
+        if (!stock.status === 200) {
+          throw new Error("Could not retrieve stock. Please try again later.");
+        }
+        return stock.json();
+      })
+      .then((stockJson) => {
+        this.setState({
+          query_values: stockJson.values,
+        })
+      .then(() => {
+        this.history.goBack();
+      })
+
+        console.log("test");
+        console.log(this.state.query_values);
+        console.log(stockJson.values);
+      });
+  };
+
   renderMainRoutes() {
     return (
       <>
         <Route exact path="/" component={Home} />
         <Route path="/watchlist" component={Watchlist} />
-        <Route path="/info" component={StockPage} />
+        <Route path="/:stock_symbol" component={StockPage} />
       </>
     );
   }
@@ -71,7 +103,9 @@ class App extends Component {
       meta: this.state.meta,
       spy_data: this.state.spy_data,
       lastPrice: this.state.lastPrice,
-      oldPrice: this.state.oldPrice
+      oldPrice: this.state.oldPrice,
+      handleStockQuery: this.handleStockQuery,
+      handleSubmit: this.handleSubmit,
     };
 
     return (

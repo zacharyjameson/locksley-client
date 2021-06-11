@@ -14,10 +14,8 @@ class Home extends Component {
     const { spy_data = [] } = this.context;
     const lastPrice = this.context.lastPrice;
     const oldPrice = this.context.oldPrice;
-    console.log(oldPrice);
 
     const lineColor = lastPrice > oldPrice ? '#1DB954' : '#FF0000';
-    console.log(lineColor);
 
     const createData = (info) => {
       info.map((stock) => {
