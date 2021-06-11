@@ -90,7 +90,7 @@ class App extends Component {
 
     fetch(url)
       .then((stock) => {
-        if (!stock.status === 200) {
+        if (stock.code === 400) {
           throw new Error("Could not retrieve stock. Please try again later.");
         }
         return stock.json();
