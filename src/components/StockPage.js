@@ -12,7 +12,8 @@ class StockPage extends Component {
     e.preventDefault();
 
     const { symbol, name, volume, close, open, previous_close, percent_change } = this.context.query_values;
-    const { fiftytwo_week_high, fiftytwo_week_low } = this.context.query_52week;
+    const { high, low } = this.context.query_52week;
+    console.log(high);
 
     const requestOptions = {
       method: "POST",
@@ -27,8 +28,8 @@ class StockPage extends Component {
         stock_percent_change: `${percent_change}`,
         stock_close: `${close}`,
         stock_open: `${open}`,
-        fiftytwo_week_high: `${fiftytwo_week_high}`,
-        fiftytwo_week_low: `${fiftytwo_week_low}`
+        fiftytwo_week_high: `${high}`,
+        fiftytwo_week_low: `${low}`
       }),
     };
 

@@ -42,7 +42,11 @@ class Watchlist extends Component {
         <section>
           <h1>Watchlist</h1>
           <div>
-            <input type="button" value="Clear Watchlist" onClick={this.handleClear} />
+            <input
+              type="button"
+              value="Clear Watchlist"
+              onClick={this.handleClear}
+            />
             <ul>
               {savedStocks.map((savedStock) => {
                 return (

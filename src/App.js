@@ -113,6 +113,7 @@ class App extends Component {
         });
         this.props.history.push(`/stock/${query}`);
         console.log(this.state.query_values);
+        console.log(this.state.query_52week.low);
       });
   };
 
