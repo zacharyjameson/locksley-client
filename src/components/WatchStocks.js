@@ -42,13 +42,17 @@ class WatchStocks extends Component {
       fiftytwo_week_low,
     } = this.props;
 
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     return (
       <div>
         <h2>
-          {symbol} | {name} | ${parseFloat(close).toFixed(3)} (
-          {contextual.handlePosNeg(percent_change)})
+          {symbol} | {name} | ${numberWithCommas(parseFloat(close).toFixed(3))} (
+          {contextual.handlePosNeg(parseFloat(percent_change).toFixed(3))})
         </h2>
-        <div>Open: {open}</div>
+        <div>Open: {numberWithCommas(parseFloat(open).toFixed(3))}</div>
         <div>Volume: {volume}</div>
         <div>Previous Close: ${parseFloat(previous_close).toFixed(3)} </div>
         <div>
