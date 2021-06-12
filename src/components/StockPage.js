@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Chart } from "react-google-charts";
+import config from "../config";
 import ApiContext from "./ApiContext";
 
 class StockPage extends Component {
@@ -7,12 +8,54 @@ class StockPage extends Component {
 
   static contextType = ApiContext;
 
+  //PSQL DB CALL TO ADD STOCK
+  handleAddStock = (e) => {
+    e.preventDefault();
+
+    const { symbol, name, volume, close, open, previous_close, percent_change } = this.context.query_values;
+    const { fiftytwo_week_high, fiftytwo_week_low } = this.context.query_52week;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        stock_symbol: `${symbol}`,
+        stock_name: `${name}`,
+        stock_volume: `${volume}`,
+        stock_previous_close: `${previous_close}`,
+        stock_percent_change: `${percent_change}`,
+        stock_close: `${close}`,
+        stock_open: `${open}`,
+        fiftytwo_week_high: `${fiftytwo_week_high}`,
+        fiftytwo_week_low: `${fiftytwo_week_low}`
+      }),
+    };
+
+    fetch(`${config.API_ENDPOINT}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Whoops! Please try again later.");
+        }
+        return res.json();
+        
+      })
+      .then((res) => {
+        console.log(res.body);
+        this.props.history.push("/watchlist");
+        this.context.fetchSavedData();
+      })
+      .catch((error) => {
+        console.log("Error: ", error)
+      })
+  }
+
   render() {
 
     const qStock = this.context.query_values;
     const schfiftyfive = this.context.query_52week;
     const stock = this.context;
-    console.log(stock);
 
     return (
       <div className="StockPage">
@@ -24,7 +67,7 @@ class StockPage extends Component {
                 <div>Volume: {qStock.volume}</div>
                 <div>Previous Close: ${parseFloat(qStock.previous_close).toFixed(3)} </div>
                 <div>52-Week: Low: {parseFloat(schfiftyfive.low).toFixed(3)} High: {parseFloat(schfiftyfive.high).toFixed(3)} </div>
-                <button type="submit">Add to Watchlist</button>
+                <input type="button" onClick={this.handleAddStock} value="Add to Watchlist" />
                 <div><a href="#">Click to Refresh Data</a></div>
               </li>
             </ul>

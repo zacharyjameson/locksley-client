@@ -22,31 +22,42 @@ class App extends Component {
   };
 
   componentDidMount() {
-    this.fetchAllData();
+    this.fetchSavedData();
+    this.fetchHomeData();
   }
 
-  fetchAllData = () => {
-    Promise.all([
-      fetch(`${config.API_ENDPOINT}`),
-      fetch(`${config.STOCK_API_URL}&symbol=SPY,DJI`),
-    ])
-      .then(([savedStocksRes, spyRes]) => {
-        if (!savedStocksRes.ok)
-          return savedStocksRes.json().then((e) => Promise.reject(e));
+  fetchHomeData = () => {
+    Promise.all([fetch(`${config.STOCK_API_URL}&symbol=SPY,DJI`)])
+      .then(([spyRes]) => {
         if (!spyRes.ok) return spyRes.json((e) => Promise.reject(e));
-
-        return Promise.all([savedStocksRes.json(), spyRes.json()]);
+        return Promise.all([spyRes.json()]);
       })
-      .then(([savedStocks, spy]) => {
+      .then(([spy]) => {
         this.setState({
-          savedStocks: savedStocks,
           spy: spy.SPY,
           dji: spy.DJI,
           schfiftyfiveSPY: spy.SPY.fifty_two_week,
-          schfiftyfiveDJI: spy.DJI.fifty_two_week
+          schfiftyfiveDJI: spy.DJI.fifty_two_week,
         });
-        console.log(spy.close);
-        console.log(spy);
+      })
+      .catch((error) => {
+        console.log({ error });
+      });
+  };
+
+  fetchSavedData = () => {
+    Promise.all([fetch(`${config.API_ENDPOINT}`)])
+      .then(([savedStocksRes]) => {
+        if (!savedStocksRes.ok)
+          return savedStocksRes.json().then((e) => Promise.reject(e));
+
+        return Promise.all([savedStocksRes.json()]);
+      })
+      .then(([savedStocks]) => {
+        this.setState({
+          savedStocks: savedStocks,
+        });
+        console.log(savedStocks);
       })
       .catch((error) => {
         console.error({ error });
@@ -126,6 +137,7 @@ class App extends Component {
       handleSubmit: this.handleSubmit,
       handleIncDec: this.handleIncDec,
       handlePosNeg: this.handlePosNeg,
+      fetchSavedData: this.fetchSavedData,
       query: this.state.query,
       query_values: this.state.query_values,
       query_52week: this.state.query_52week,

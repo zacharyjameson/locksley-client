@@ -26,7 +26,7 @@ class Searchbar extends Component {
               required
             />
             <input type="submit" value="submit" /> |{" "}
-            <Link to="/watchlist">Watchlist ({uniqueSymbols.length})</Link>
+            <Link to="/watchlist">Watchlist ({savedStocks.savedStocks.length})</Link>
           </form>
           <p>Search Limit: 8 per minute</p>
         </nav>
