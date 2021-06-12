@@ -16,6 +16,11 @@ class Searchbar extends Component {
 
     return (
       <div className="Searchbar">
+        <header>
+              <h1>
+                <Link to="/">Locksley</Link>
+              </h1>
+            </header>
         <nav role="navigation">
           <form onSubmit={stocks.handleSubmit}>
             <input

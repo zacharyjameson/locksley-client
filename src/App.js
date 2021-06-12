@@ -148,11 +148,6 @@ class App extends Component {
         <div className="App_main">
           <main>
             <Searchbar />
-            <header>
-              <h1>
-                <Link to="/">Locksley</Link>
-              </h1>
-            </header>
             {this.renderMainRoutes()}
           </main>
         </div>
