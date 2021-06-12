@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ApiContext from "./ApiContext";
-import WatchedStock from "./WatchedStock";
+import WatchStocks from "./WatchStocks";
 
 class Watchlist extends Component {
   state = {};
@@ -9,8 +9,6 @@ static contextType = ApiContext
 
   render() {
     const { savedStocks = [] } = this.context;
-    const contextual = this.context;
-    console.log(savedStocks);
 
     return (
       <div className="Watchlist">
@@ -23,8 +21,8 @@ static contextType = ApiContext
             <ul>
               {savedStocks.map((savedStock) => {
                 return (
-                  <li key={savedStock.stock_id} id={savedStock.stock_name}>
-                    <WatchedStock 
+                  <li key={savedStock.id} id={savedStock.stock_name}>
+                    <WatchStocks
                     name={savedStock.stock_name}
                     symbol={savedStock.stock_symbol}
                     volume={savedStock.stock_volume}

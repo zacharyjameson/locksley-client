@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ApiContext from "./ApiContext";
 
-class WatchedStock extends Component {
+class WatchStocks extends Component {
   state = {};
 
   static contextType = ApiContext;
@@ -31,4 +31,4 @@ class WatchedStock extends Component {
   }
 }
 
-export default WatchedStock;
+export default WatchStocks;
