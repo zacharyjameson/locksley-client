@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Chart } from "react-google-charts";
 import ApiContext from "./ApiContext";
 
 class Home extends Component {
@@ -9,7 +7,6 @@ class Home extends Component {
   static contextType = ApiContext;
 
   render() {
-    const close = this.context.currentPriceClose;
     const spy = this.context.spy;
     const dji = this.context.dji;
     const schfiftyfiveSPY = this.context.schfiftyfiveSPY;

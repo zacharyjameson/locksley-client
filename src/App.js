@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import ApiContext from "./components/ApiContext";
 import Home from "./components/Home";
 import Searchbar from "./components/Searchbar";

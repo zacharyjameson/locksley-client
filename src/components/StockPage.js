@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Chart } from "react-google-charts";
 import config from "../config";
 import ApiContext from "./ApiContext";
 
@@ -68,7 +67,6 @@ class StockPage extends Component {
                 <div>Previous Close: ${parseFloat(qStock.previous_close).toFixed(3)} </div>
                 <div>52-Week: Low: {parseFloat(schfiftyfive.low).toFixed(3)} High: {parseFloat(schfiftyfive.high).toFixed(3)} </div>
                 <input type="button" onClick={this.handleAddStock} value="Add to Watchlist" />
-                <div><a href="#">Click to Refresh Data</a></div>
               </li>
             </ul>
           </div>

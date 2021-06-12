@@ -48,6 +48,7 @@ class WatchStocks extends Component {
           {symbol} | {name} | ${parseFloat(close).toFixed(3)} (
           {contextual.handlePosNeg(percent_change)})
         </h2>
+        <div>Open: {open}</div>
         <div>Volume: {volume}</div>
         <div>Previous Close: ${parseFloat(previous_close).toFixed(3)} </div>
         <div>

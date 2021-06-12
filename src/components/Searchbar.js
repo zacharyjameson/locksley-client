@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { countStocksPerSymbol } from "../stocks-helpers";
 import ApiContext from "./ApiContext";
 
 class Searchbar extends Component {
@@ -12,7 +11,6 @@ class Searchbar extends Component {
     const savedStocks = this.context;
     const handleStockQuery = this.context;
     const stocks = this.context;
-    const uniqueSymbols = countStocksPerSymbol(savedStocks);
 
     return (
       <div className="Searchbar">
