@@ -42,7 +42,7 @@ class StockPage extends Component {
         
       })
       .then((res) => {
-        console.log(res.body);
+        console.log(this.context.savedStocks);
         this.props.history.push("/watchlist");
         this.context.fetchSavedData();
       })
