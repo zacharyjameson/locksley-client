@@ -101,19 +101,23 @@ class App extends Component {
 
     fetch(url)
       .then((stock) => {
-        if (stock.code === 400) {
+        if (!stock.status) {
           throw new Error("Could not retrieve stock. Please try again later.");
         }
         return stock.json();
       })
       .then((stockJson) => {
-        this.setState({
-          query_values: stockJson,
-          query_52week: stockJson.fifty_two_week,
-        });
-        this.props.history.push(`/stock/${query}`);
-        console.log(this.state.query_values);
-        console.log(this.state.query_52week.low);
+        if (stockJson.code) {
+          return alert(`Please enter an accepeted stock ticker symbol i.e. MSFT, AAPL, TSLA, etc.`);
+        } else {
+          this.setState({
+            query_values: stockJson,
+            query_52week: stockJson.fifty_two_week,
+          });
+          this.props.history.push(`/stock/${query}`);
+          console.log(this.state.query_values);
+          console.log(this.state.query_52week);
+        }
       });
   };
 

@@ -21,9 +21,10 @@ class Home extends Component {
       <div className="Home">
         <section>
           <header>
-            Locksley gives you a no-nonsense view of your favorite stocks;
-            including current price, historical data over the last several
-            weeks, all saved in your favorite list.
+            Locksley gives you a simple, but no-nonsense view of your favorite stocks;
+            including current price and recent close data as well as historical data over the last 52
+            weeks, all which can be saved in your favorite list. <br />
+            Get started by searching for a stock, by ticker symbol, and hit submit!
           </header>
           <div>
             <ul>

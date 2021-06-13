@@ -60,6 +60,7 @@ class StockPage extends Component {
     return (
       <div className="StockPage">
         <section>
+          <div></div>
           <div>
             <ul>
               <li>
