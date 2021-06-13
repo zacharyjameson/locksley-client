@@ -60,7 +60,7 @@ class StockPage extends Component {
     return (
       <div className="StockPage">
         <section>
-          <div></div>
+          <div>Add this stock to your watchlist by hitting the "Add to Watchlist" button below, or search for a new stock above.</div>
           <div>
             <ul>
               <li>
