@@ -4,7 +4,21 @@
 
 .App_main {
   margin: auto;
-  width: 90%;
+  margin-bottom: 30px;
+  width: 85%;
+}
+
+.homeinfo {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    width: 50%
+}
+
+.mobileTitle {
+    text-align: center;
+    margin-bottom: 5px;
 }
 
 /* NAVBAR MOBILE STYLING */
@@ -83,6 +97,8 @@ h1 {
 .sub {
   font-style: italic;
   font-size: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .title {
@@ -105,7 +121,7 @@ a:visited {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   align-content: center;
   margin: auto;
   margin-top: 30px;
@@ -113,9 +129,8 @@ a:visited {
 }
 
 .homeitem {
-  flex: 1;
   margin: 15px;
-  width: 320px;
+  width: 330px;
   padding: 25px;
   text-align: center;
   transition: transform 0.5s;
@@ -159,5 +174,14 @@ li {
 
   .homeitem:hover {
     transform: scale(1.01);
+  }
+
+  .mobileTitle {
+      display: none;
+  }
+
+  .homegroup {
+      flex-direction: row;
+      flex-wrap: wrap;
   }
 }

@@ -25,7 +25,10 @@ class Searchbar extends Component {
               </Link>
             </div>
             <h1 className="title titleItem">
-              <Link to="/">Locksley</Link>
+              <Link to="/">
+                Locksley <br />
+                Finance
+              </Link>
             </h1>
           </div>
         </div>

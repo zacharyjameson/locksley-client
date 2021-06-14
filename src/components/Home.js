@@ -20,14 +20,17 @@ class Home extends Component {
     return (
       <div className="Home">
         <section>
-          <header>
+          <div className="homeinfo">
+            <h1 className="mobileTitle">Locksley</h1>
+          </div>
+          <div className="homeinfo">
             Locksley gives you a simple, but no-nonsense view of your favorite
             stocks; including current price and recent close data as well as
             historical data over the last 52 weeks, all which can be saved in
             your favorite list. <br />
             Get started by searching for a stock, by ticker symbol, and hit
             submit!
-          </header>
+          </div>
           <div>
             <ul className="homegroup">
               <li>
@@ -37,7 +40,10 @@ class Home extends Component {
                   </h2>
                   <h3>
                     ${parseFloat(spy.close).toFixed(3)} (
-                    {stock.handlePosNeg(parseFloat(spy.percent_change).toFixed(3))})
+                    {stock.handlePosNeg(
+                      parseFloat(spy.percent_change).toFixed(3)
+                    )}
+                    )
                   </h3>
                   <div>
                     Open: {numberWithCommas(parseFloat(spy.open).toFixed(3))}
@@ -60,7 +66,10 @@ class Home extends Component {
                   </h2>
                   <h3 color="red">
                     ${numberWithCommas(parseFloat(dji.close).toFixed(3))} (
-                    {stock.handlePosNeg(parseFloat(dji.percent_change).toFixed(3))})
+                    {stock.handlePosNeg(
+                      parseFloat(dji.percent_change).toFixed(3)
+                    )}
+                    )
                   </h3>
                   <div>
                     Open: {numberWithCommas(parseFloat(dji.open).toFixed(3))}

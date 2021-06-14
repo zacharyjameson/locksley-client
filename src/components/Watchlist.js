@@ -40,7 +40,8 @@ class Watchlist extends Component {
     return (
       <div className="Watchlist">
         <section>
-          <h1>Watchlist</h1>
+          <h1 className="homeinfo">Watchlist</h1>
+          <div className="homeinfo">All of the stocks you have added to your watchlist appear here, in your watchlist. Click the remove button to get rid of a stock from this list</div> <div className="homeinfo"><em>....but remember, stonks only go up!</em></div>
           <div>
             <input
               type="button"
