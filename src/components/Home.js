@@ -13,6 +13,9 @@ class Home extends Component {
     const schfiftyfiveDJI = this.context.schfiftyfiveDJI;
     const stock = this.context;
 
+    const updog = parseFloat(spy.percent_change) >= 0 ? "up" : "down";
+    const downdog = parseFloat(dji.percent_change) >= 0 ? "up" : "down";
+
     function numberWithCommas(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
@@ -38,7 +41,7 @@ class Home extends Component {
                   <h2>
                     {spy.symbol} | {spy.name}
                   </h2>
-                  <h3>
+                  <h3 id={updog}>
                     ${parseFloat(spy.close).toFixed(3)} (
                     {stock.handlePosNeg(
                       parseFloat(spy.percent_change).toFixed(3)
@@ -64,7 +67,7 @@ class Home extends Component {
                   <h2>
                     {dji.symbol} | {dji.name}
                   </h2>
-                  <h3 color="red">
+                  <h3 id={downdog}>
                     ${numberWithCommas(parseFloat(dji.close).toFixed(3))} (
                     {stock.handlePosNeg(
                       parseFloat(dji.percent_change).toFixed(3)

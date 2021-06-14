@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+html {
+    background-color: rgb(47, 48, 66);
+    color: white;
+}
+
 .App_main {
   margin: auto;
   margin-bottom: 30px;
@@ -109,11 +114,15 @@ h1 {
 
 a {
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 a:visited {
-  color: black;
+  color: white;
+}
+
+a:hover {
+    color: #1db954;
 }
 
 /* INDIVIDUAL STOCK STYLING */
@@ -134,6 +143,7 @@ a:visited {
   padding: 25px;
   text-align: center;
   transition: transform 0.5s;
+  background-color: #505372;
 }
 
 .homeitem h2,
@@ -149,7 +159,7 @@ h3 {
 
 .stock {
   border-radius: 20px;
-  box-shadow: 0px 0px 20px rgb(59, 59, 59);
+  box-shadow: 0px 0px 20px rgba(59, 59, 59, 0.699);
 }
 
 ul {
@@ -159,6 +169,16 @@ ul {
 
 li {
   list-style-type: none;
+}
+
+#up {
+    color: #1db954;
+    text-shadow: 0px 0px 20px #1db954ad;
+}
+
+#down {
+    color: rgb(218, 45, 45);
+    text-shadow: 0px 0px 20px rgba(218, 45, 45, 0.815);
 }
 
 @media all and (min-width: 900px) {

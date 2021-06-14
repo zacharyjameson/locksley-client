@@ -18,21 +18,18 @@ class Searchbar extends Component {
     return (
       <div className="Searchbar navGroup">
         <div className="navItem">
-          <div className="titleGroup">
-            <div className="titleItem">
-              <Link to="/">
+          <Link to="/" className="icon">
+            <div className="titleGroup">
+              <div className="titleItem">
                 <FontAwesomeIcon icon={faFortAwesomeAlt} size="3x" />
-              </Link>
-            </div>
-            <h1 className="title titleItem">
-              <Link to="/">
+              </div>
+              <h1 className="title titleItem">
                 Locksley <br />
                 Finance
-              </Link>
-            </h1>
-          </div>
+              </h1>
+            </div>
+          </Link>
         </div>
-
         <div className="navItem middle">
           <form onSubmit={stocks.handleSubmit}>
             <input
