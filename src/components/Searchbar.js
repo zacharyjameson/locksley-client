@@ -43,7 +43,7 @@ class Searchbar extends Component {
           <Link to="/watchlist">
             <div className="folderGroup">
               <div className="folderItem watchItem"> Watchlist | </div>
-              <div className="folderItem">
+              <div className="folderItem watchItem">
                 <FontAwesomeIcon
                   icon={faFolder}
                   size="2x"
