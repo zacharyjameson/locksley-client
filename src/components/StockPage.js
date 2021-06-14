@@ -11,7 +11,15 @@ class StockPage extends Component {
   handleAddStock = (e) => {
     e.preventDefault();
 
-    const { symbol, name, volume, close, open, previous_close, percent_change } = this.context.query_values;
+    const {
+      symbol,
+      name,
+      volume,
+      close,
+      open,
+      previous_close,
+      percent_change,
+    } = this.context.query_values;
     const { high, low } = this.context.query_52week;
     console.log(high);
 
@@ -29,7 +37,7 @@ class StockPage extends Component {
         stock_close: `${close}`,
         stock_open: `${open}`,
         fiftytwo_week_high: `${high}`,
-        fiftytwo_week_low: `${low}`
+        fiftytwo_week_low: `${low}`,
       }),
     };
 
@@ -39,7 +47,6 @@ class StockPage extends Component {
           throw new Error("Whoops! Please try again later.");
         }
         return res.json();
-        
       })
       .then((res) => {
         console.log(this.context.savedStocks);
@@ -47,12 +54,11 @@ class StockPage extends Component {
         this.context.fetchSavedData();
       })
       .catch((error) => {
-        console.log("Error: ", error)
-      })
-  }
+        console.log("Error: ", error);
+      });
+  };
 
   render() {
-
     const qStock = this.context.query_values;
     const schfiftyfive = this.context.query_52week;
     const stock = this.context;
@@ -60,15 +66,34 @@ class StockPage extends Component {
     return (
       <div className="StockPage">
         <section>
-          <div>Add this stock to your watchlist by hitting the "Add to Watchlist" button below, or search for a new stock above.</div>
           <div>
-            <ul>
-              <li>
-                <h2>{qStock.symbol} | {qStock.name} | ${parseFloat(qStock.close).toFixed(3)} ({stock.handlePosNeg(qStock.percent_change)})</h2>
+            Add this stock to your watchlist by hitting the "Add to Watchlist"
+            button below, or search for a new stock above.
+          </div>
+          <div>
+            <ul className="homegroup">
+              <li className="stock homeitem">
+                <h2>
+                  {qStock.symbol} | {qStock.name}
+                </h2>
+                <h3>
+                  ${parseFloat(qStock.close).toFixed(3)} (
+                  {stock.handlePosNeg(qStock.percent_change)})
+                </h3>
                 <div>Volume: {qStock.volume}</div>
-                <div>Previous Close: ${parseFloat(qStock.previous_close).toFixed(3)} </div>
-                <div>52-Week: Low: {parseFloat(schfiftyfive.low).toFixed(3)} High: {parseFloat(schfiftyfive.high).toFixed(3)} </div>
-                <input type="button" onClick={this.handleAddStock} value="Add to Watchlist" />
+                <div>
+                  Previous Close: $
+                  {parseFloat(qStock.previous_close).toFixed(3)}{" "}
+                </div>
+                <div>
+                  52-Week: Low: {parseFloat(schfiftyfive.low).toFixed(3)} High:{" "}
+                  {parseFloat(schfiftyfive.high).toFixed(3)}{" "}
+                </div>
+                <input
+                  type="button"
+                  onClick={this.handleAddStock}
+                  value="Add to Watchlist"
+                />
               </li>
             </ul>
           </div>

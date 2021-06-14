@@ -49,9 +49,12 @@ class WatchStocks extends Component {
     return (
       <div>
         <h2>
-          {symbol} | {name} | ${numberWithCommas(parseFloat(close).toFixed(3))} (
-          {contextual.handlePosNeg(parseFloat(percent_change).toFixed(3))})
+          {symbol} | {name}
         </h2>
+        <h3>
+          ${numberWithCommas(parseFloat(close).toFixed(3))} (
+          {contextual.handlePosNeg(parseFloat(percent_change).toFixed(3))})
+        </h3>
         <div>Open: {numberWithCommas(parseFloat(open).toFixed(3))}</div>
         <div>Volume: {volume}</div>
         <div>Previous Close: ${parseFloat(previous_close).toFixed(3)} </div>

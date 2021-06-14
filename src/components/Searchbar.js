@@ -18,12 +18,16 @@ class Searchbar extends Component {
     return (
       <div className="Searchbar navGroup">
         <div className="navItem">
-          <h1 className="title">
-            <Link to="/">Locksley</Link>
-          </h1>
-          <Link to="/">
-            <FontAwesomeIcon icon={faFortAwesomeAlt} size="3x" />
-          </Link>
+          <div className="titleGroup">
+            <div className="titleItem">
+              <Link to="/">
+                <FontAwesomeIcon icon={faFortAwesomeAlt} size="3x" />
+              </Link>
+            </div>
+            <h1 className="title titleItem">
+              <Link to="/">Locksley</Link>
+            </h1>
+          </div>
         </div>
 
         <div className="navItem middle">
@@ -53,7 +57,9 @@ class Searchbar extends Component {
                   icon={faFolderOpen}
                   size="2x"
                   className="folderOpen"
-                /></div>{" "}<div className="folderItem">
+                />
+              </div>{" "}
+              <div className="folderItem">
                 ({savedStocks.savedStocks.length})
               </div>
             </div>

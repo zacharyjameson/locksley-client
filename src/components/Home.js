@@ -29,14 +29,16 @@ class Home extends Component {
             submit!
           </header>
           <div>
-            <ul className="group">
+            <ul className="homegroup">
               <li>
-                <div className="stock item">
+                <div className="stock homeitem">
                   <h2>
-                    {spy.symbol} | {spy.name} | $
-                    {parseFloat(spy.close).toFixed(3)} (
-                    {stock.handlePosNeg(spy.percent_change)})
+                    {spy.symbol} | {spy.name}
                   </h2>
+                  <h3>
+                    ${parseFloat(spy.close).toFixed(3)} (
+                    {stock.handlePosNeg(parseFloat(spy.percent_change).toFixed(3))})
+                  </h3>
                   <div>
                     Open: {numberWithCommas(parseFloat(spy.open).toFixed(3))}
                   </div>
@@ -52,12 +54,14 @@ class Home extends Component {
                 </div>
               </li>
               <li>
-                <div className="stock item">
+                <div className="stock homeitem">
                   <h2>
-                    {dji.symbol} | {dji.name} | $
-                    {numberWithCommas(parseFloat(dji.close).toFixed(3))} (
-                    {stock.handlePosNeg(dji.percent_change)})
+                    {dji.symbol} | {dji.name}
                   </h2>
+                  <h3 color="red">
+                    ${numberWithCommas(parseFloat(dji.close).toFixed(3))} (
+                    {stock.handlePosNeg(parseFloat(dji.percent_change).toFixed(3))})
+                  </h3>
                   <div>
                     Open: {numberWithCommas(parseFloat(dji.open).toFixed(3))}
                   </div>
