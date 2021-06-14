@@ -47,10 +47,10 @@ class Watchlist extends Component {
               value="Clear Watchlist"
               onClick={this.handleClear}
             />
-            <ul>
+            <ul className="homegroup">
               {savedStocks.map((savedStock) => {
                 return (
-                  <li key={savedStock.id} id={savedStock.stock_name}>
+                  <li key={savedStock.id} id={savedStock.stock_name} className="homeitem stock">
                     <WatchStocks
                       name={savedStock.stock_name}
                       symbol={savedStock.stock_symbol}
