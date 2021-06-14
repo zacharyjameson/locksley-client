@@ -16,23 +16,54 @@
 #stock-search {
     border-radius: 8px;
     height: 25px;
-    width: 100px;
+    width: 150px;
+}
+
+input[type=text] {
+    text-align: center;
 }
 
 .navGroup {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .navItem {
     flex: 1;
-    flex-shrink: 4;
 }
 
 .middle {
     text-align: center;
     flex: 2;
+}
+
+.folderGroup {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
+
+.folderGroup > :first-child {
+    display: none;
+}
+
+.watchlist .folderOpen {
+    display: none;
+}
+
+.watchlist:hover .folderOpen {
+    display: unset;
+}
+
+.watchlist:hover .folderClosed {
+    display: none;
+}
+
+.watchItem{
+    margin-right: 5px;
 }
 
 .end {
@@ -56,6 +87,19 @@ li {
     list-style-type: none;
 }
 
+/* LINKS */
+
 a {
     text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+@media all and (min-width: 900px) {
+    .folderGroup > :first-child {
+        display: unset;
+    }
 }

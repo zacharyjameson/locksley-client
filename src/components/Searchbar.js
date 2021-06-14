@@ -3,6 +3,7 @@ import { faFortAwesomeAlt } from "@fortawesome/free-brands-svg-icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ApiContext from "./ApiContext";
+import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 class Searchbar extends Component {
   state = {};
@@ -21,7 +22,7 @@ class Searchbar extends Component {
             <Link to="/">Locksley</Link>
           </h1>
           <Link to="/">
-            <FontAwesomeIcon icon={faFortAwesomeAlt} size="2x" />
+            <FontAwesomeIcon icon={faFortAwesomeAlt} size="3x" />
           </Link>
         </div>
 
@@ -35,13 +36,27 @@ class Searchbar extends Component {
               required
             />
             <input hidden type="submit" value="submit" />
-            <br />
             <p className="sub">Search Limit: 8/min</p>
           </form>
         </div>
-        <div className="navItem end">
+        <div className="navItem watchlist end">
           <Link to="/watchlist">
-             Watchlist({savedStocks.savedStocks.length})
+            <div className="folderGroup">
+              <div className="folderItem watchItem"> Watchlist | </div>
+              <div className="folderItem">
+                <FontAwesomeIcon
+                  icon={faFolder}
+                  size="2x"
+                  className="folderClosed"
+                />
+                <FontAwesomeIcon
+                  icon={faFolderOpen}
+                  size="2x"
+                  className="folderOpen"
+                /></div>{" "}<div className="folderItem">
+                ({savedStocks.savedStocks.length})
+              </div>
+            </div>
           </Link>
         </div>
       </div>
