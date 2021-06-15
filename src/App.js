@@ -40,6 +40,9 @@ class App extends Component {
           schfiftyfiveDJI: spy.DJI.fifty_two_week,
         });
       })
+      .then(() => {
+        console.log("Got Home Data: ", this.state.spy, this.state.dji);
+      })
       .catch((error) => {
         console.log({ error });
       });
@@ -57,7 +60,7 @@ class App extends Component {
         this.setState({
           savedStocks: savedStocks,
         });
-        console.log(savedStocks);
+        console.log("Got Saved Data: ", savedStocks);
       })
       .catch((error) => {
         console.error({ error });
@@ -131,11 +134,14 @@ class App extends Component {
       },
     };
 
-    this.state.savedStocks.map((savedStock) => {
-      const url = `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`;
-      const symbol = savedStock.stock_symbol;
-      console.log(url);
-      return fetch(url, getOptions)
+    console.log(this.state.savedStocks);
+    const refreshStocks = this.state.savedStocks;
+
+    refreshStocks.map((savedStock) => {
+      return fetch(
+        `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`,
+        getOptions
+      )
         .then((res) => {
           if (!res.status) {
             alert(
@@ -145,39 +151,41 @@ class App extends Component {
           return res.json();
         })
         .then((stockJson) => {
-          if (stockJson.code) {
-            return alert(
-              "One or more of the stocks couldn't be retrieved. Please try again later."
-            );
-          } else {
-            const removed = symbol;
-            console.log(removed);
-            const requestOptions = {
-              method: "DELETE",
-              headers: {
-                "content-type": "application/json",
-              },
-            };
-            fetch(`${config.API_ENDPOINT}/${removed}`, requestOptions)
-              .then((res) => {
-                if (res.status === 204) return res;
-              })
-              .catch((error) => {
-                console.error({ error });
-              });
-            this.setState({
-              query_values: stockJson,
-              query_52week: stockJson.fifty_two_week,
+          console.log("GET REFRESH RESPONSE INITIAL", stockJson);
+          console.log(savedStock.stock_symbol);
+          const requestOptions = {
+            method: "DELETE",
+            headers: {
+              "content-type": "application/json",
+            },
+          };
+          fetch(
+            `${config.API_ENDPOINT}/${savedStock.stock_symbol}`,
+            requestOptions
+          )
+            .then((res) => {
+              if (res.status === 204) return res;
+            })
+            .catch((error) => {
+              console.error({ error });
             });
-            console.log(this.state.savedStocks);
-          }
+
+          this.setState({
+            query_values: stockJson,
+            query_52week: stockJson.fifty_two_week,
+          });
+          console.log(
+            `Set State for Refreshed Add ${(stockJson.symbol, stockJson)}`
+          );
+          console.log(this.state.savedStocks);
         })
         .then(() => {
           this.handleRefreshAddStock();
+          console.log("Added Refreshed Stock");
         })
         .then(() => {
           this.fetchSavedData();
-        })
+        });
     });
   };
 
@@ -212,7 +220,7 @@ class App extends Component {
       percent_change,
     } = this.state.query_values;
     const { high, low } = this.state.query_52week;
-    console.log("hello");
+    console.log("Adding Stock: ", symbol);
 
     const requestOptions = {
       method: "POST",
@@ -238,6 +246,9 @@ class App extends Component {
           throw new Error("Whoops! Please try again later.");
         }
         return res.json();
+      })
+      .then((resJson) => {
+        console.log("Added: ", resJson.stock_symbol);
       })
       .catch((error) => {
         console.log("Error: ", error);
