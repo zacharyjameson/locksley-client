@@ -38,20 +38,26 @@ class Watchlist extends Component {
     const { savedStocks = [] } = this.context;
 
     return (
-      <div className="Watchlist">
+      <div className="Home">
         <section>
           <h1 className="homeinfo">Watchlist</h1>
-          <div className="homeinfo">All of the stocks you have added to your watchlist appear here, in your watchlist. Click the remove button to get rid of a stock from this list</div> <div className="homeinfo"><em>....but remember, stonks only go up!</em></div>
+          <div className="homeinfo">
+            All of the stocks you have added to your watchlist appear here, in
+            your watchlist. Click the remove button to get rid of a stock from
+            this list
+          </div>{" "}
+          <div className="homeinfo">
+            <em>....but remember, stonks only go up!</em>
+          </div>
           <div>
-            <input
-              type="button"
-              value="Clear Watchlist"
-              onClick={this.handleClear}
-            />
             <ul className="homegroup">
               {savedStocks.map((savedStock) => {
                 return (
-                  <li key={savedStock.id} id={savedStock.stock_name} className="homeitem stock">
+                  <li
+                    key={savedStock.id}
+                    id={savedStock.stock_name}
+                    className="homeitem stock"
+                  >
                     <WatchStocks
                       name={savedStock.stock_name}
                       symbol={savedStock.stock_symbol}
@@ -67,6 +73,12 @@ class Watchlist extends Component {
                 );
               })}
             </ul>
+            <input
+              type="button"
+              value="Clear Watchlist"
+              onClick={this.handleClear}
+              className={ savedStocks.length > 0 ? "clearButton" : "hidden"}
+            />
           </div>
         </section>
       </div>

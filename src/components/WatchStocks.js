@@ -47,11 +47,11 @@ class WatchStocks extends Component {
     }
 
     return (
-      <div>
+      <div className="Home">
         <h2>
           {symbol} | {name}
         </h2>
-        <h3>
+        <h3 id={parseFloat(percent_change) >= 0 ? "up" : "down"}>
           ${numberWithCommas(parseFloat(close).toFixed(3))} (
           {contextual.handlePosNeg(parseFloat(percent_change).toFixed(3))})
         </h3>
@@ -62,7 +62,7 @@ class WatchStocks extends Component {
           52-Week: Low: {parseFloat(fiftytwo_week_low).toFixed(3)} High:{" "}
           {parseFloat(fiftytwo_week_high).toFixed(3)}{" "}
         </div>
-        <input value="Remove" type="button" onClick={this.handleRemove} />
+        <input value="Remove" type="button" onClick={this.handleRemove} className="clearButton" />
       </div>
     );
   }

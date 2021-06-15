@@ -64,7 +64,7 @@ class StockPage extends Component {
     const stock = this.context;
 
     return (
-      <div className="StockPage">
+      <div className="Home">
         <section>
           <div className="homeinfo">
             Add this stock to your watchlist by hitting the "Add to Watchlist"
@@ -76,7 +76,7 @@ class StockPage extends Component {
                 <h2>
                   {qStock.symbol} | {qStock.name}
                 </h2>
-                <h3>
+                <h3 id={parseFloat(qStock.percent_change) >= 0 ? "up" : "down"}>
                   ${parseFloat(qStock.close).toFixed(3)} (
                   {stock.handlePosNeg(qStock.percent_change)})
                 </h3>
@@ -93,6 +93,7 @@ class StockPage extends Component {
                   type="button"
                   onClick={this.handleAddStock}
                   value="Add to Watchlist"
+                  className="clearButton"
                 />
               </li>
             </ul>
