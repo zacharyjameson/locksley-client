@@ -72,14 +72,14 @@ input[type="text"] {
 .folderGroup {
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 }
 
 .titleGroup {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
 }
 

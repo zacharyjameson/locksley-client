@@ -109,7 +109,7 @@ class App extends Component {
       .then((stockJson) => {
         if (stockJson.code) {
           return alert(
-            `Please enter an accepeted stock ticker symbol i.e. MSFT, AAPL, TSLA, etc.`
+            `You have entered an invalid stock symbol or exceeded the rate limit for requests (8 per minute). Please enter a valid stock symbol or wait 1 minute before making another request.`
           );
         } else {
           this.setState({
@@ -133,8 +133,9 @@ class App extends Component {
 
     this.state.savedStocks.map((savedStock) => {
       const url = `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`;
+      const symbol = savedStock.stock_symbol;
       console.log(url);
-      fetch(url, getOptions)
+      return fetch(url, getOptions)
         .then((res) => {
           if (!res.status) {
             alert(
@@ -149,7 +150,8 @@ class App extends Component {
               "One or more of the stocks couldn't be retrieved. Please try again later."
             );
           } else {
-            const removed = savedStock.stock_symbol;
+            const removed = symbol;
+            console.log(removed);
             const requestOptions = {
               method: "DELETE",
               headers: {
@@ -167,13 +169,16 @@ class App extends Component {
               query_values: stockJson,
               query_52week: stockJson.fifty_two_week,
             });
+            console.log(this.state.savedStocks);
           }
         })
         .then(() => {
           this.handleRefreshAddStock();
-        });
+        })
+        .then(() => {
+          this.fetchSavedData();
+        })
     });
-    this.fetchSavedData();
   };
 
   handleRemove = () => {
@@ -207,6 +212,7 @@ class App extends Component {
       percent_change,
     } = this.state.query_values;
     const { high, low } = this.state.query_52week;
+    console.log("hello");
 
     const requestOptions = {
       method: "POST",
@@ -232,30 +238,6 @@ class App extends Component {
           throw new Error("Whoops! Please try again later.");
         }
         return res.json();
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  };
-
-  handleRefreshClear = () => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    fetch(`${config.API_ENDPOINT}`, requestOptions)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(
-            "Whoops! Something went wrong. Please try again later."
-          );
-        }
-      })
-      .then(() => {
-        this.fetchSavedData();
       })
       .catch((error) => {
         console.log("Error: ", error);
