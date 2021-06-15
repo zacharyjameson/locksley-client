@@ -127,6 +127,11 @@ class App extends Component {
   handleRefresh = (e) => {
     e.preventDefault();
 
+    const urls = this.state.savedStocks.map((savedStock) => {
+      return `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`;
+    });
+    console.log(urls);
+
     const getOptions = {
       method: "GET",
       headers: {
@@ -134,59 +139,48 @@ class App extends Component {
       },
     };
 
-    console.log(this.state.savedStocks);
-    const refreshStocks = this.state.savedStocks;
+    const delOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
 
-    refreshStocks.map((savedStock) => {
-      return fetch(
-        `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`,
-        getOptions
-      )
-        .then((res) => {
-          if (!res.status) {
-            alert(
-              "One or more of the stocks couldn't be retrieved. Please try again later."
-            );
-          }
-          return res.json();
-        })
-        .then((stockJson) => {
-          console.log("GET REFRESH RESPONSE INITIAL", stockJson);
-          console.log(savedStock.stock_symbol);
-          const requestOptions = {
-            method: "DELETE",
-            headers: {
-              "content-type": "application/json",
-            },
-          };
-          fetch(
-            `${config.API_ENDPOINT}/${savedStock.stock_symbol}`,
-            requestOptions
-          )
-            .then((res) => {
-              if (res.status === 204) return res;
+    Promise.all(urls.map((url) => fetch(url, getOptions)))
+      .then((response) => {
+        return Promise.all(
+          response.map((res) => {
+            return res.json();
+          })
+        );
+      })
+      .then((jsn) => {
+        return Promise.all(
+          jsn.map((stock) => {
+            fetch(`${config.API_ENDPOINT}&symbol=${stock.symbol}`, delOptions);
+            console.log(stock.symbol)
+          }),
+          jsn.map((stock) =>
+            fetch(`${config.API_ENDPOINT}`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({
+                stock_symbol: `${stock.symbol}`,
+                stock_name: `${stock.name}`,
+                stock_volume: `${stock.volume}`,
+                stock_previous_close: `${stock.previous_close}`,
+                stock_percent_change: `${stock.percent_change}`,
+                stock_close: `${stock.close}`,
+                stock_open: `${stock.open}`,
+                fiftytwo_week_high: `${stock.fifty_two_week.high}`,
+                fiftytwo_week_low: `${stock.fifty_two_week.low}`,
+              }),
             })
-            .catch((error) => {
-              console.error({ error });
-            });
-
-          this.setState({
-            query_values: stockJson,
-            query_52week: stockJson.fifty_two_week,
-          });
-          console.log(
-            `Set State for Refreshed Add ${(stockJson.symbol, stockJson)}`
-          );
-          console.log(this.state.savedStocks);
-        })
-        .then(() => {
-          this.handleRefreshAddStock();
-          console.log("Added Refreshed Stock");
-        })
-        .then(() => {
-          this.fetchSavedData();
-        });
-    });
+          )
+        );
+      });
   };
 
   handleRemove = () => {
