@@ -3,8 +3,8 @@
 }
 
 html {
-    background-color: rgb(99, 100, 116);
-    color: white;
+  background-color: rgb(99, 100, 116);
+  color: white;
 }
 
 .App_main {
@@ -13,22 +13,22 @@ html {
 }
 
 .Home {
-    margin: auto;
-    width: 85%;
+  margin: auto;
+  width: 85%;
 }
 
 .homeinfo {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    margin: auto;
-    margin-top: 10px;
-    width: 50%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+  margin-top: 10px;
+  width: 50%;
 }
 
 .mobileTitle {
-    text-align: center;
-    margin-bottom: 5px;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 /* NAVBAR MOBILE STYLING */
@@ -134,7 +134,7 @@ a:visited {
 }
 
 a:hover {
-    color: #1db954;
+  color: #1db954;
 }
 
 /* INDIVIDUAL STOCK STYLING */
@@ -155,7 +155,7 @@ a:hover {
   padding: 25px;
   text-align: center;
   transition: transform 0.5s;
-  background-color: #505372;
+  background-color: #5a60a7;
 }
 
 .homeitem h2,
@@ -171,10 +171,7 @@ h3 {
 
 .stock {
   border-radius: 20px;
-}
-
-.stock:hover {
-    box-shadow: 0px 0px 20px rgb(0, 0, 0);
+  box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
 ul {
@@ -187,30 +184,46 @@ li {
 }
 
 #up {
-    color: #1db954;
-    text-shadow: 0px 0px 20px #1db954ad;
+  color: #1db954;
+  text-shadow: 0px 0px 20px #1db954ad;
 }
 
 #down {
-    color: rgb(218, 45, 45);
-    text-shadow: 0px 0px 20px rgba(218, 45, 45, 0.815);
+  color: rgb(218, 45, 45);
+  text-shadow: 0px 0px 20px rgba(218, 45, 45, 0.815);
 }
 
 /* BUTTONS */
 
 .clearButton {
-    display: flex;
-    justify-content: center;
-    margin: auto;
-    margin-top: 8px;
-    border-radius: 10px;
-    padding: 10px;
-    position: relative;
-
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  position: relative;
 }
 
 .hidden {
-    display: none;
+  display: none;
+}
+
+.overlay {
+  position: relative;
+  margin: none;
+  padding: none;
+}
+
+.overlay input {
+  position: relative;
+  display: none;
+}
+
+.overlay:hover input {
+  display: block;
+  top: 45%;
 }
 
 @media all and (min-width: 900px) {
@@ -229,11 +242,11 @@ li {
   }
 
   .mobileTitle {
-      display: none;
+    display: none;
   }
 
   .homegroup {
-      flex-direction: row;
-      flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }

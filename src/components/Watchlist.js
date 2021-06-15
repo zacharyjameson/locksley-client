@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import config from "../config";
 import ApiContext from "./ApiContext";
 import WatchStocks from "./WatchStocks";
 
@@ -7,32 +6,6 @@ class Watchlist extends Component {
   state = {};
 
   static contextType = ApiContext;
-
-  handleClear = (e) => {
-    e.preventDefault();
-
-    const requestOptions = {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    fetch(`${config.API_ENDPOINT}`, requestOptions)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(
-            "Whoops! Something went wrong. Please try again later."
-          );
-        }
-      })
-      .then(() => {
-        this.context.fetchSavedData();
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
-      });
-  };
 
   render() {
     const { savedStocks = [] } = this.context;
@@ -44,7 +17,7 @@ class Watchlist extends Component {
           <div className="homeinfo">
             All of the stocks you have added to your watchlist appear here, in
             your watchlist. Click the remove button to get rid of a stock from
-            this list
+            this list.
           </div>{" "}
           <div className="homeinfo">
             <em>....but remember, stonks only go up!</em>
@@ -56,7 +29,7 @@ class Watchlist extends Component {
                   <li
                     key={savedStock.id}
                     id={savedStock.stock_name}
-                    className="homeitem stock"
+                    className="homeitem stock overlay"
                   >
                     <WatchStocks
                       name={savedStock.stock_name}
@@ -76,8 +49,14 @@ class Watchlist extends Component {
             <input
               type="button"
               value="Clear Watchlist"
-              onClick={this.handleClear}
-              className={ savedStocks.length > 0 ? "clearButton" : "hidden"}
+              onClick={this.context.handleClear}
+              className={savedStocks.length > 0 ? "clearButton" : "hidden"}
+            />
+            <input
+              type="button"
+              value="Refresh Data"
+              onClick={this.context.handleRefresh}
+              className={savedStocks.length > 0 ? "clearButton" : "hidden"}
             />
           </div>
         </section>

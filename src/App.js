@@ -108,16 +108,231 @@ class App extends Component {
       })
       .then((stockJson) => {
         if (stockJson.code) {
-          return alert(`Please enter an accepeted stock ticker symbol i.e. MSFT, AAPL, TSLA, etc.`);
+          return alert(
+            `Please enter an accepeted stock ticker symbol i.e. MSFT, AAPL, TSLA, etc.`
+          );
         } else {
           this.setState({
             query_values: stockJson,
             query_52week: stockJson.fifty_two_week,
           });
           this.props.history.push(`/stock/${query}`);
-          console.log(this.state.query_values);
-          console.log(this.state.query_52week);
         }
+      });
+  };
+
+  handleRefresh = (e) => {
+    e.preventDefault();
+
+    const getOptions = {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    this.state.savedStocks.map((savedStock) => {
+      const url = `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`;
+      console.log(url);
+      fetch(url, getOptions)
+        .then((res) => {
+          if (!res.status) {
+            alert(
+              "One or more of the stocks couldn't be retrieved. Please try again later."
+            );
+          }
+          return res.json();
+        })
+        .then((stockJson) => {
+          if (stockJson.code) {
+            return alert(
+              "One or more of the stocks couldn't be retrieved. Please try again later."
+            );
+          } else {
+            const removed = savedStock.stock_symbol;
+            const requestOptions = {
+              method: "DELETE",
+              headers: {
+                "content-type": "application/json",
+              },
+            };
+            fetch(`${config.API_ENDPOINT}/${removed}`, requestOptions)
+              .then((res) => {
+                if (res.status === 204) return res;
+              })
+              .catch((error) => {
+                console.error({ error });
+              });
+            this.setState({
+              query_values: stockJson,
+              query_52week: stockJson.fifty_two_week,
+            });
+          }
+        })
+        .then(() => {
+          this.handleRefreshAddStock();
+        });
+    });
+    this.fetchSavedData();
+  };
+
+  handleRemove = () => {
+    const removed = this.props.symbol;
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+    fetch(`${config.API_ENDPOINT}/${removed}`, requestOptions)
+      .then((res) => {
+        if (res.status === 204) return res;
+      })
+      .then(() => {
+        this.context.fetchSavedData();
+      })
+      .catch((error) => {
+        console.error({ error });
+      });
+  };
+
+  handleRefreshAddStock = () => {
+    const {
+      symbol,
+      name,
+      volume,
+      close,
+      open,
+      previous_close,
+      percent_change,
+    } = this.state.query_values;
+    const { high, low } = this.state.query_52week;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        stock_symbol: `${symbol}`,
+        stock_name: `${name}`,
+        stock_volume: `${volume}`,
+        stock_previous_close: `${previous_close}`,
+        stock_percent_change: `${percent_change}`,
+        stock_close: `${close}`,
+        stock_open: `${open}`,
+        fiftytwo_week_high: `${high}`,
+        fiftytwo_week_low: `${low}`,
+      }),
+    };
+
+    fetch(`${config.API_ENDPOINT}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Whoops! Please try again later.");
+        }
+        return res.json();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  handleRefreshClear = () => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    fetch(`${config.API_ENDPOINT}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            "Whoops! Something went wrong. Please try again later."
+          );
+        }
+      })
+      .then(() => {
+        this.fetchSavedData();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  handleAddStock = (e) => {
+    e.preventDefault();
+
+    const {
+      symbol,
+      name,
+      volume,
+      close,
+      open,
+      previous_close,
+      percent_change,
+    } = this.state.query_values;
+    const { high, low } = this.state.query_52week;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        stock_symbol: `${symbol}`,
+        stock_name: `${name}`,
+        stock_volume: `${volume}`,
+        stock_previous_close: `${previous_close}`,
+        stock_percent_change: `${percent_change}`,
+        stock_close: `${close}`,
+        stock_open: `${open}`,
+        fiftytwo_week_high: `${high}`,
+        fiftytwo_week_low: `${low}`,
+      }),
+    };
+
+    fetch(`${config.API_ENDPOINT}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Whoops! Please try again later.");
+        }
+        return res.json();
+      })
+      .then((res) => {
+        this.props.history.push("/watchlist");
+        this.fetchSavedData();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+  };
+
+  handleClear = (e) => {
+    e.preventDefault();
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+      },
+    };
+
+    fetch(`${config.API_ENDPOINT}`, requestOptions)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(
+            "Whoops! Something went wrong. Please try again later."
+          );
+        }
+      })
+      .then(() => {
+        this.fetchSavedData();
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
       });
   };
 
@@ -143,6 +358,9 @@ class App extends Component {
       handleIncDec: this.handleIncDec,
       handlePosNeg: this.handlePosNeg,
       fetchSavedData: this.fetchSavedData,
+      handleClear: this.handleClear,
+      handleAddStock: this.handleAddStock,
+      handleRefresh: this.handleRefresh,
       query: this.state.query,
       query_values: this.state.query_values,
       query_52week: this.state.query_52week,
