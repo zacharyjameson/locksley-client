@@ -3,7 +3,6 @@ import { faFortAwesomeAlt } from "@fortawesome/free-brands-svg-icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ApiContext from "./ApiContext";
-import search from "./images/search.png";
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 class Searchbar extends Component {
