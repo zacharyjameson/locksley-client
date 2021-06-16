@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+@font-face {
+  font-family: fairlyodd;
+  src: url(BandeinsStrangeVariable.ttf);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -10,6 +17,7 @@ html {
 .App_main {
   margin: auto;
   margin-bottom: 30px;
+  font-family: fairlyodd, sans-serif;
 }
 
 .Home {
@@ -49,7 +57,7 @@ html {
   width: 150px;
 }
 
-input[type="text"] {
+input[type="search"] {
   text-align: center;
 }
 
@@ -151,7 +159,7 @@ a:hover {
 
 .homeitem {
   margin: 15px;
-  width: 330px;
+  width: 340px;
   padding: 25px;
   text-align: center;
   transition: transform 0.5s;
@@ -194,7 +202,6 @@ li {
 }
 
 /* BUTTONS */
-
 .clearButton {
   display: flex;
   justify-content: center;
@@ -203,27 +210,16 @@ li {
   border: none;
   border-radius: 10px;
   padding: 10px;
+  font-weight: bold;
   position: relative;
+}
+
+.clearButton:active {
+  transform: scale(0.9)
 }
 
 .hidden {
   display: none;
-}
-
-.overlay {
-  position: relative;
-  margin: none;
-  padding: none;
-}
-
-.overlay input {
-  position: relative;
-  display: none;
-}
-
-.overlay:hover input {
-  display: block;
-  top: 45%;
 }
 
 @media all and (min-width: 900px) {
@@ -248,5 +244,39 @@ li {
   .homegroup {
     flex-direction: row;
     flex-wrap: wrap;
+  }
+
+  .clearButton {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 8px;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    transition: transform 0.5s;
+  }
+
+  .clearButton:hover {
+    background-color: black;
+    color: white;
+    transform: scale(1.1)
+  }
+
+  .overlay {
+    position: relative;
+    margin: none;
+    padding: none;
+  }
+  
+  .overlay input {
+    position: relative;
+    display: none;
+  }
+  
+  .overlay:hover input {
+    display: block;
+    top: 45%;
   }
 }

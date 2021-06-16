@@ -31,8 +31,8 @@ class Home extends Component {
             stocks; including current price and recent close data as well as
             historical data over the last 52 weeks, all which can be saved in
             your favorite list. <br />
-            Get started by searching for a stock, by ticker symbol, and hit
-            submit!
+            Get started by searching for a stock, by ticker symbol, and press
+            enter to begin your search!
           </div>
           <div>
             <ul className="homegroup">
@@ -57,7 +57,7 @@ class Home extends Component {
                     {parseFloat(stock.spy.previous_close).toFixed(3)}{" "}
                   </div>
                   <div>
-                    52-Week: Low: {parseFloat(schfiftyfiveSPY.low).toFixed(3)}{" "}
+                    52-Week: <br />Low: {parseFloat(schfiftyfiveSPY.low).toFixed(3)}{" "}
                     High: {parseFloat(schfiftyfiveSPY.high).toFixed(3)}{" "}
                   </div>
                 </div>
@@ -85,7 +85,7 @@ class Home extends Component {
                     )}{" "}
                   </div>
                   <div>
-                    52-Week: Low: {parseFloat(schfiftyfiveDJI.low).toFixed(3)}{" "}
+                    52-Week: <br /> Low: {parseFloat(schfiftyfiveDJI.low).toFixed(3)}{" "}
                     High: {parseFloat(schfiftyfiveDJI.high).toFixed(3)}{" "}
                   </div>
                 </div>

@@ -3,6 +3,7 @@ import { faFortAwesomeAlt } from "@fortawesome/free-brands-svg-icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ApiContext from "./ApiContext";
+import search from "./images/search.png";
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 class Searchbar extends Component {
@@ -33,9 +34,9 @@ class Searchbar extends Component {
         <div className="navItem middle">
           <form onSubmit={stocks.handleSubmit}>
             <input
-              type="text"
-              placeholder="Search"
+              type="search"
               id="stock-search"
+              placeholder="Search"
               onChange={handleStockQuery.handleStockQuery}
               required
             />

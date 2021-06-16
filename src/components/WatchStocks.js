@@ -60,7 +60,7 @@ class WatchStocks extends Component {
           <div>Volume: {volume}</div>
           <div>Previous Close: ${parseFloat(previous_close).toFixed(3)} </div>
           <div>
-            52-Week: Low: {parseFloat(fiftytwo_week_low).toFixed(3)} High:{" "}
+            52-Week: <br /> Low: {parseFloat(fiftytwo_week_low).toFixed(3)} High:{" "}
             {parseFloat(fiftytwo_week_high).toFixed(3)}{" "}
           </div>
           <input
