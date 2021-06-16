@@ -67,6 +67,26 @@ class App extends Component {
       });
   };
 
+  fetchDBdata = () => {
+    fetch(`${config.API_ENDPOINT}`)
+      .then((dbStock) => {
+        if (!dbStock.ok) {
+          throw new Error("Database could not be accessed");
+        } else {
+          return dbStock.json();
+        }
+      })
+      .then((dbStockJson) => {
+        this.setState({
+          savedStocks: dbStockJson,
+        });
+        console.log("Updated Data: ", dbStockJson);
+      })
+      .catch((error) => {
+        console.error({ error });
+      });
+  };
+
   // CALCULATE PERCENTAGE INCREASE OR DECREASE
   handleIncDec(origPrice, curPrice) {
     let number;
@@ -141,7 +161,7 @@ class App extends Component {
       },
     };
 
-    const promise = Promise.all(urls.map((url) => fetch(url, getOptions)))
+    Promise.all(urls.map((url) => fetch(url, getOptions)))
       .then((response) => {
         return Promise.all(
           response.map((res) => {
@@ -161,7 +181,7 @@ class App extends Component {
               body: JSON.stringify({
                 stock_symbol: `${stock.symbol}`,
                 stock_name: `${stock.name}`,
-                stock_volume: `150`,
+                stock_volume: `${stock.volume}`,
                 stock_previous_close: `${stock.previous_close}`,
                 stock_percent_change: `${stock.percent_change}`,
                 stock_close: `${stock.close}`,
@@ -169,31 +189,13 @@ class App extends Component {
                 fiftytwo_week_high: `${stock.fifty_two_week.high}`,
                 fiftytwo_week_low: `${stock.fifty_two_week.low}`,
               }),
+            }).then((res) => {
+              console.log("Getting Updated Data");
+              this.fetchDBdata();
             });
           })
         );
-      });
-
-      const promises = [promise];
-    Promise.allSettled(promises).then(() => {
-      console.log("Getting Updated Data");
-      return Promise.all([fetch(`${config.API_ENDPOINT}`)])
-        .then(([savedStocksRes]) => {
-          if (!savedStocksRes.ok)
-            return savedStocksRes.json().then((e) => Promise.reject(e));
-
-          return Promise.all([savedStocksRes.json()]);
-        })
-        .then(([savedStocks]) => {
-          this.setState({
-            savedStocks: savedStocks,
-          });
-          console.log("Got Updated Data: ", savedStocks);
-        })
-        .catch((error) => {
-          console.error({ error });
-        });
-    });
+      })
   };
 
   handleRemove = () => {
