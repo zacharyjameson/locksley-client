@@ -35,7 +35,7 @@ class Searchbar extends Component {
             <input
               type="search"
               id="stock-search"
-              placeholder="Search"
+              placeholder="MSFT, CRWD, AAPL, etc."
               onChange={handleStockQuery.handleStockQuery}
               required
             />
