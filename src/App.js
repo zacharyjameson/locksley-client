@@ -124,6 +124,8 @@ class App extends Component {
       });
   };
 
+  //HANDLE REFRESH OF ALL SAVED DATA - CALLS NEW DATA, DELETES OLD DATA, UPDATES NEW DATA
+
   handleRefresh = (e) => {
     e.preventDefault();
 
@@ -134,13 +136,6 @@ class App extends Component {
 
     const getOptions = {
       method: "GET",
-      headers: {
-        "content-type": "application/json",
-      },
-    };
-
-    const delOptions = {
-      method: "DELETE",
       headers: {
         "content-type": "application/json",
       },
@@ -157,12 +152,8 @@ class App extends Component {
       .then((jsn) => {
         return Promise.all(
           jsn.map((stock) => {
-            fetch(`${config.API_ENDPOINT}&symbol=${stock.symbol}`, delOptions);
-            console.log(stock.symbol)
-          }),
-          jsn.map((stock) =>
-            fetch(`${config.API_ENDPOINT}`, {
-              method: "POST",
+            fetch(`${config.API_ENDPOINT}/${stock.symbol}`, {
+              method: "PATCH",
               headers: {
                 "content-type": "application/json",
               },
@@ -177,9 +168,13 @@ class App extends Component {
                 fiftytwo_week_high: `${stock.fifty_two_week.high}`,
                 fiftytwo_week_low: `${stock.fifty_two_week.low}`,
               }),
-            })
-          )
+            });
+            console.log(stock.symbol);
+          })
         );
+      })
+      .then(() => {
+        this.fetchSavedData();
       });
   };
 
