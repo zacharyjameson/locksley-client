@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFortAwesomeAlt } from "@fortawesome/free-brands-svg-icons";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import ApiContext from "./ApiContext";
+import ApiContext from "../ApiContext";
 import { faFolder, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 
 class Searchbar extends Component {
@@ -35,7 +35,7 @@ class Searchbar extends Component {
             <input
               type="search"
               id="stock-search"
-              placeholder="MSFT, CRWD, AAPL, etc."
+              placeholder="MSFT, CRWD, etc."
               onChange={handleStockQuery.handleStockQuery}
               required
             />

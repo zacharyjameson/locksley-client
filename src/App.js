@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
 import ApiContext from "./components/ApiContext";
-import Home from "./components/Home";
-import Searchbar from "./components/Searchbar";
-import StockPage from "./components/StockPage";
-import Watchlist from "./components/Watchlist";
+import Home from "./components/Home/Home";
+import Searchbar from "./components/Searchbar/Searchbar";
+import StockPage from "./components/StockPage/StockPage";
+import Watchlist from "./components/Watchlist/Watchlist";
 import config from "./config";
 import "./App.css";
 import { withRouter } from "react-router-dom";

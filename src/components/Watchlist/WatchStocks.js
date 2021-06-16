@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import ApiContext from "./ApiContext";
-import config from "../config";
+import ApiContext from "../ApiContext";
+import config from "../../config.js";
 
 class WatchStocks extends Component {
   state = {};
