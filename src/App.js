@@ -40,9 +40,6 @@ class App extends Component {
           schfiftyfiveDJI: spy.DJI.fifty_two_week,
         });
       })
-      .then(() => {
-        console.log("Got Home Data: ", this.state.spy, this.state.dji);
-      })
       .catch((error) => {
         console.log({ error });
       });
@@ -60,7 +57,6 @@ class App extends Component {
         this.setState({
           savedStocks: savedStocks,
         });
-        console.log("Got Saved Data: ", savedStocks);
       })
       .catch((error) => {
         console.error({ error });
@@ -80,7 +76,6 @@ class App extends Component {
         this.setState({
           savedStocks: dbStockJson,
         });
-        console.log("Updated Data: ", dbStockJson);
       })
       .catch((error) => {
         console.error({ error });
@@ -152,7 +147,6 @@ class App extends Component {
     const urls = this.state.savedStocks.map((savedStock) => {
       return `${config.STOCK_API_URL}&symbol=${savedStock.stock_symbol}`;
     });
-    console.log(urls);
 
     const getOptions = {
       method: "GET",
@@ -170,7 +164,6 @@ class App extends Component {
         );
       })
       .then((jsn) => {
-        console.log("New Data: ", jsn);
         return Promise.all(
           jsn.map((stock) => {
             fetch(`${config.API_ENDPOINT}/${stock.symbol}`, {
@@ -190,7 +183,6 @@ class App extends Component {
                 fiftytwo_week_low: `${stock.fifty_two_week.low}`,
               }),
             }).then((res) => {
-              console.log("Getting Updated Data");
               this.fetchDBdata();
             });
           })
