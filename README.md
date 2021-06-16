@@ -27,10 +27,10 @@ Technology Used:
 ## Screenshots
 
 ### Home
-![Home Page](src/images/home.jpeg)
+![Home Page](src/components/images/home.jpeg)
 
-## Search Results
-![Search](src/images/search.jpeg)
+### Search Results
+![Search](src/components/images/search.jpeg)
 
-## Wachlist
-![Watchlsit](src/images/watchlist.jpeg)
+### Wachlist
+![Watchlist](src/components/images/watchlist.jpeg)
