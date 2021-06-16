@@ -141,7 +141,7 @@ class App extends Component {
       },
     };
 
-    Promise.all(urls.map((url) => fetch(url, getOptions)))
+    const promise = Promise.all(urls.map((url) => fetch(url, getOptions)))
       .then((response) => {
         return Promise.all(
           response.map((res) => {
@@ -150,6 +150,7 @@ class App extends Component {
         );
       })
       .then((jsn) => {
+        console.log("New Data: ", jsn);
         return Promise.all(
           jsn.map((stock) => {
             fetch(`${config.API_ENDPOINT}/${stock.symbol}`, {
@@ -160,7 +161,7 @@ class App extends Component {
               body: JSON.stringify({
                 stock_symbol: `${stock.symbol}`,
                 stock_name: `${stock.name}`,
-                stock_volume: `${stock.volume}`,
+                stock_volume: `150`,
                 stock_previous_close: `${stock.previous_close}`,
                 stock_percent_change: `${stock.percent_change}`,
                 stock_close: `${stock.close}`,
@@ -169,13 +170,30 @@ class App extends Component {
                 fiftytwo_week_low: `${stock.fifty_two_week.low}`,
               }),
             });
-            console.log(stock.symbol);
           })
         );
-      })
-      .then(() => {
-        this.fetchSavedData();
       });
+
+      const promises = [promise];
+    Promise.allSettled(promises).then(() => {
+      console.log("Getting Updated Data");
+      return Promise.all([fetch(`${config.API_ENDPOINT}`)])
+        .then(([savedStocksRes]) => {
+          if (!savedStocksRes.ok)
+            return savedStocksRes.json().then((e) => Promise.reject(e));
+
+          return Promise.all([savedStocksRes.json()]);
+        })
+        .then(([savedStocks]) => {
+          this.setState({
+            savedStocks: savedStocks,
+          });
+          console.log("Got Updated Data: ", savedStocks);
+        })
+        .catch((error) => {
+          console.error({ error });
+        });
+    });
   };
 
   handleRemove = () => {
@@ -195,52 +213,6 @@ class App extends Component {
       })
       .catch((error) => {
         console.error({ error });
-      });
-  };
-
-  handleRefreshAddStock = () => {
-    const {
-      symbol,
-      name,
-      volume,
-      close,
-      open,
-      previous_close,
-      percent_change,
-    } = this.state.query_values;
-    const { high, low } = this.state.query_52week;
-    console.log("Adding Stock: ", symbol);
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        stock_symbol: `${symbol}`,
-        stock_name: `${name}`,
-        stock_volume: `${volume}`,
-        stock_previous_close: `${previous_close}`,
-        stock_percent_change: `${percent_change}`,
-        stock_close: `${close}`,
-        stock_open: `${open}`,
-        fiftytwo_week_high: `${high}`,
-        fiftytwo_week_low: `${low}`,
-      }),
-    };
-
-    fetch(`${config.API_ENDPOINT}`, requestOptions)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Whoops! Please try again later.");
-        }
-        return res.json();
-      })
-      .then((resJson) => {
-        console.log("Added: ", resJson.stock_symbol);
-      })
-      .catch((error) => {
-        console.log("Error: ", error);
       });
   };
 
