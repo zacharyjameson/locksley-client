@@ -27,10 +27,10 @@ Technology Used:
 ## Screenshots
 
 ### Home
-![Home Page](/Users/zacharyjameson/Desktop/Projects/locksley-client/src/images/Home.jpeg)
+![Home Page](src/images/Home.jpeg)
 
 ### Search Results
-![Search](/src/images/search.jpeg)
+![Search](src/images/Search.jpeg)
 
 ### Wachlist
-![Watchlist](./src/images/watchlist.jpeg)
+![Watchlist](src/images/Watchlist.jpeg)
